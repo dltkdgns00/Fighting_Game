@@ -18,8 +18,8 @@ class Sprite
         this.lastKey = '';
         this.attackBox = {
             position: {
-                x: this.position.x + 50,
-                y: this.position.y + 50
+                x: this.position.x,
+                y: this.position.y
             },
             offset: offset,
             width: 100,
@@ -27,6 +27,7 @@ class Sprite
         }
         this.color = color;
         this.isAttacking;
+        this.health = 100;
     }
 
     draw()
@@ -35,15 +36,15 @@ class Sprite
         ctx.fillRect(this.position.x, this.position.y, 50, 150);
 
         // attack box
-        // if (this.isAttacking)
-        // {
-        ctx.fillStyle = 'green';
-        ctx.fillRect(
-            this.attackBox.position.x,
-            this.attackBox.position.y,
-            this.attackBox.width,
-            this.attackBox.height)
-        // }
+        if (this.isAttacking)
+        {
+            ctx.fillStyle = 'green';
+            ctx.fillRect(
+                this.attackBox.position.x,
+                this.attackBox.position.y,
+                this.attackBox.width,
+                this.attackBox.height)
+        }
     }
 
     update()
@@ -119,18 +120,6 @@ const keys = {
     }
 };
 
-function rectangularCollision({
-    rectangle1,
-    rectangle2
-})
-{
-    return (
-        rectangle1.position.x + rectangle1.width >= rectangle2.position.x &&
-        rectangle1.position.x <= rectangle2.position.x + 50 &&
-        rectangle1.position.y + rectangle1.height >= rectangle2.position.y &&
-        rectangle1.position.y <= rectangle2.position.y + 150
-    )
-}
 
 function animate()
 {
@@ -173,26 +162,30 @@ function animate()
 
     // detect for collision
     if (
-        rectangularCollision({
-            rectangle1: player,
-            rectangle2: enemy
-        }) &&
+        player.attackBox.position.x + player.attackBox.width >= enemy.position.x &&
+        player.attackBox.position.x <= enemy.position.x + 50 &&
+        player.attackBox.position.y + player.attackBox.height >= enemy.position.y &&
+        player.attackBox.position.y <= enemy.position.y + 150 &&
         player.isAttacking
     )
     {
         player.isAttacking = false;
+        enemy.health -= 20;
+        document.querySelector('#enemyHealth').style.width = enemy.health + '%';
         console.log('player hitted');
     }
 
     if (
-        rectangularCollision({
-            rectangle1: enemy,
-            rectangle2: player
-        }) &&
+        enemy.attackBox.position.x + enemy.attackBox.width >= player.position.x &&
+        enemy.attackBox.position.x <= player.position.x + 50 &&
+        enemy.attackBox.position.y + enemy.attackBox.height >= player.position.y &&
+        enemy.attackBox.position.y <= player.position.y + 150 &&
         enemy.isAttacking
     )
     {
         enemy.isAttacking = false;
+        player.health -= 20;
+        document.querySelector('#playerHealth').style.width = player.health + '%';
         console.log('enemy hitted');
     }
 }
@@ -204,14 +197,17 @@ window.addEventListener('keydown', (event) =>
     switch (event.key)
     {
         case 'd':
+        case 'ㅇ':
             keys.d.pressed = true;
             player.lastKey = 'd';
             break;
         case 'a':
+        case 'ㅁ':
             keys.a.pressed = true;
             player.lastKey = 'a';
             break;
         case 'w':
+        case 'ㅈ':
             keys.w.pressed = true;
             player.lastKey = 'w';
             break;
@@ -219,7 +215,7 @@ window.addEventListener('keydown', (event) =>
             player.attack();
             break;
     }
-    console.log(event.key);
+    // console.log(event.key);
 })
 
 window.addEventListener('keyup', (event) =>
@@ -227,19 +223,22 @@ window.addEventListener('keyup', (event) =>
     switch (event.key)
     {
         case 'd':
+        case 'ㅇ':
             keys.d.pressed = false;
             player.lastKey = 'd';
             break;
         case 'a':
+        case 'ㅁ':
             keys.a.pressed = false;
             player.lastKey = 'a';
             break;
         case 'w':
+        case 'ㅈ':
             keys.w.pressed = false;
             player.lastKey = 'w';
             break;
     }
-    console.log(event.key);
+    // console.log(event.key);
 })
 
 window.addEventListener('keydown', (event) =>
@@ -262,7 +261,7 @@ window.addEventListener('keydown', (event) =>
             enemy.attack();
             break;
     }
-    console.log(event.key);
+    // console.log(event.key);
 })
 
 window.addEventListener('keyup', (event) =>
@@ -282,5 +281,5 @@ window.addEventListener('keyup', (event) =>
             enemy.lastKey = 'ArrowUp';
             break;
     }
-    console.log(event.key);
+    // console.log(event.key);
 })
