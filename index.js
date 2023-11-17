@@ -120,6 +120,44 @@ const keys = {
     }
 };
 
+function determineWinner({ player, enemy, timerId })
+{
+    clearTimeout(timerId);
+    document.querySelector('#displayText').style.display = 'flex';
+
+    if (player.health === enemy.health)
+    {
+        document.querySelector('#displayText').innerHTML = 'Draw';
+    }
+    else if (player.health > enemy.health)
+    {
+        document.querySelector('#displayText').innerHTML = 'Player 1 Wins';
+    }
+    else if (player.health < enemy.health)
+    {
+        document.querySelector('#displayText').innerHTML = 'Player 2 Wins';
+    }
+}
+
+let timer = 60;
+let timerId;
+function decreaseTimer()
+{
+    if (timer > 0)
+    {
+        timerId = setTimeout(decreaseTimer, 1000);
+        timer--;
+        document.querySelector('#timer').innerHTML = timer;
+    }
+
+    if (timer === 0)
+    {
+        determineWinner({ player, enemy });
+    }
+
+}
+
+decreaseTimer();
 
 function animate()
 {
@@ -172,7 +210,12 @@ function animate()
         player.isAttacking = false;
         enemy.health -= 20;
         document.querySelector('#enemyHealth').style.width = enemy.health + '%';
-        console.log('player hitted');
+
+        // end game based on health
+        if (enemy.health <= 0 || player.health <= 0)
+        {
+            determineWinner({ player, enemy, timerId });
+        }
     }
 
     if (
@@ -186,7 +229,12 @@ function animate()
         enemy.isAttacking = false;
         player.health -= 20;
         document.querySelector('#playerHealth').style.width = player.health + '%';
-        console.log('enemy hitted');
+
+        // end game based on health
+        if (enemy.health <= 0 || player.health <= 0)
+        {
+            determineWinner({ player, enemy, timerId });
+        }
     }
 }
 
