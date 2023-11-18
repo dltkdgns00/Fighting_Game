@@ -46,6 +46,20 @@ export const player = new Fighter({
     scale: 2.5,
     offset: {
         x: 215, y: 157
+    },
+    sprites: {
+        idle: {
+            imageSrc: '../assets/samuraiMack/Idle.png',
+            framesMax: 8,
+        },
+        run: {
+            imageSrc: '../assets/samuraiMack/Run.png',
+            framesMax: 8,
+        },
+        jump: {
+            imageSrc: '../assets/samuraiMack/Jump.png',
+            framesMax: 2,
+        }
     }
 });
 
@@ -64,6 +78,20 @@ export const enemy = new Fighter({
     scale: 2.5,
     offset: {
         x: 215, y: 170
+    },
+    sprites: {
+        idle: {
+            imageSrc: '../assets/kenji/Idle.png',
+            framesMax: 8,
+        },
+        run: {
+            imageSrc: '../assets/kenji/Run.png',
+            framesMax: 8,
+        },
+        jump: {
+            imageSrc: '../assets/kenji/Jump.png',
+            framesMax: 2,
+        }
     }
 });
 
@@ -106,31 +134,39 @@ function animate()
     enemy.velocity.x = 0;
 
     // player movement
+    player.image = player.sprites.idle.image;
     if (keys.a.pressed && player.lastKey === 'a')
     {
         player.velocity.x = -5;
+        player.image = player.sprites.run.image;
     }
     else if (keys.d.pressed && player.lastKey === 'd')
     {
         player.velocity.x = 5;
+        player.image = player.sprites.run.image;
     }
     else if (keys.w.pressed && player.lastKey === 'w')
     {
         player.velocity.y = -20;
+        player.image = player.sprites.jump.image;
     }
 
     // enemy movement
+    enemy.image = enemy.sprites.idle.image;
     if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight')
     {
         enemy.velocity.x = 5;
+        enemy.image = enemy.sprites.run.image;
     }
     else if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft')
     {
         enemy.velocity.x = -5;
+        enemy.image = enemy.sprites.run.image;
     }
     else if (keys.ArrowUp.pressed && enemy.lastKey === 'ArrowUp')
     {
         enemy.velocity.y = -20;
+        enemy.image = enemy.sprites.jump.image;
     }
 
     // detect for collision
