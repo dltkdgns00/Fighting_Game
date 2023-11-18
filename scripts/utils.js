@@ -3,9 +3,12 @@ import { player, enemy } from './index.js';
 function rectangularCollision({ object1, object2 })
 {
     if (
-        object1.attackBox.position.x + object1.attackBox.width >= object2.position.x &&
-        object1.attackBox.position.x <= object2.position.x + object2.width &&
-        object1.attackBox.position.y + object1.attackBox.height >= object2.position.y &&
+        object1.attackBox.position.x + object1.attackBox.width >=
+        object2.position.x &&
+        object1.attackBox.position.x <=
+        object2.position.x + object2.width &&
+        object1.attackBox.position.y + object1.attackBox.height >=
+        object2.position.y &&
         object1.attackBox.position.y <= object2.position.y + object2.height
     )
     {
