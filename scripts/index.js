@@ -63,9 +63,14 @@ export const player = new Fighter({
         fall: {
             imageSrc: '../assets/samuraiMack/Fall.png',
             framesMax: 2,
+        },
+        attack1: {
+            imageSrc: '../assets/samuraiMack/Attack1.png',
+            framesMax: 6,
         }
     }
 });
+
 
 export const enemy = new Fighter({
     position: {
@@ -86,7 +91,7 @@ export const enemy = new Fighter({
     sprites: {
         idle: {
             imageSrc: '../assets/kenji/Idle.png',
-            framesMax: 8,
+            framesMax: 4,
         },
         run: {
             imageSrc: '../assets/kenji/Run.png',
@@ -99,6 +104,10 @@ export const enemy = new Fighter({
         fall: {
             imageSrc: '../assets/kenji/Fall.png',
             framesMax: 2,
+        },
+        attack1: {
+            imageSrc: '../assets/kenji/Attack1.png',
+            framesMax: 4,
         }
     }
 });
@@ -213,10 +222,9 @@ function animate()
     }
 
     if (
-        enemy.attackBox.position.x + enemy.attackBox.width >= player.position.x &&
-        enemy.attackBox.position.x <= player.position.x + 50 &&
-        enemy.attackBox.position.y + enemy.attackBox.height >= player.position.y &&
-        enemy.attackBox.position.y <= player.position.y + 150 &&
+        rectangularCollision({
+            object1: enemy, object2: player
+        }) &&
         enemy.isAttacking
     )
     {
@@ -272,7 +280,6 @@ window.addEventListener('keyup', (event) =>
         case 'ㅁ':
             keys.a.pressed = false;
             player.lastKey = 'a';
-            break;
             break;
     }
     // console.log(event.key);
