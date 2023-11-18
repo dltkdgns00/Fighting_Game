@@ -41,7 +41,12 @@ export const player = new Fighter({
     offset: {
         x: -50, y: 0
     },
-    color: 'red'
+    imageSrc: '../assets/samuraiMack/Idle.png',
+    framesMax: 8,
+    scale: 2.5,
+    offset: {
+        x: 215, y: 157
+    }
 });
 
 export const enemy = new Fighter({
@@ -54,7 +59,12 @@ export const enemy = new Fighter({
     offset: {
         x: 100, y: 0
     },
-    color: 'blue'
+    imageSrc: '../assets/kenji/Idle.png',
+    framesMax: 4,
+    scale: 2.5,
+    offset: {
+        x: 215, y: 170
+    }
 });
 
 const keys = {
