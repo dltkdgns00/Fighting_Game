@@ -116,14 +116,14 @@ class Fighter extends Sprite
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
 
-        if (this.position.y + this.height + this.velocity.y >= canvas.height - 96)
+        //gravity function
+        if (this.position.y + this.height + this.velocity.y >= canvas.height - 96 && this.velocity.y >= 0)
         {
             this.velocity.y = 0;
-            this.isJumping = false;
+            this.position.y = 330;
         } else 
         {
             this.velocity.y += gravity;
-            this.isJumping = true;
         }
     }
 
@@ -135,7 +135,45 @@ class Fighter extends Sprite
             this.isAttacking = false;
         }, 100);
     }
-}
 
+    switchSprite(sprite)
+    {
+        switch (sprite)
+        {
+            case 'idle':
+                if (this.image !== this.sprites.idle.image)
+                {
+                    this.image = this.sprites.idle.image;
+                    this.image.framesMax = this.sprites.idle.framesMax;
+                    this.framesCurrent = 0;
+                }
+                break;
+            case 'run':
+                if (this.image !== this.sprites.run.image)
+                {
+                    this.image = this.sprites.run.image;
+                    this.image.framesMax = this.sprites.run.framesMax;
+                    this.framesCurrent = 0;
+                }
+                break;
+            case 'jump':
+                if (this.image !== this.sprites.jump.image)
+                {
+                    this.image = this.sprites.jump.image;
+                    this.image.framesMax = this.sprites.jump.framesMax;
+                    this.framesCurrent = 0;
+                }
+                break;
+            case 'fall':
+                if (this.image !== this.sprites.fall.image)
+                {
+                    this.image = this.sprites.fall.image;
+                    this.image.framesMax = this.sprites.fall.framesMax;
+                    this.framesCurrent = 0;
+                }
+                break;
+        }
+    }
+}
 
 export { Fighter, Sprite }
