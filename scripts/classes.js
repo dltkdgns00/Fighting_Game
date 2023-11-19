@@ -1,4 +1,4 @@
-import { ctx, canvas, gravity } from './index.js';
+import { ctx, canvas, gravity } from '../index.js';
 
 class Sprite
 {

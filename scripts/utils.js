@@ -1,4 +1,4 @@
-import { player, enemy } from './index.js';
+import { player, enemy } from '../index.js';
 
 function rectangularCollision({ object1, object2 })
 {
